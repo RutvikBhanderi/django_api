@@ -7,5 +7,5 @@ class student(models.Model):
     email = models.CharField(max_length=100,default="")
     phone = models.BigIntegerField(default=0)
     city = models.CharField(max_length=100,default="")
-    image = models.ImageField(upload_to="")
+    image = models.ImageField(upload_to="",blank = True, null=True)
 

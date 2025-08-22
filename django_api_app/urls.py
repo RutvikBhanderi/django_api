@@ -15,9 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import ApiOverview,studentlist
+from .views import ApiOverview,studentlist,addstudent,updatestudent
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
         path('health',ApiOverview,name='hth'),
-        path('studentlist',studentlist,name='stdli')
+        path('studentlist',studentlist,name='stdli'),
+        path('addstudent',addstudent,name='addstd'),
+        path('updatestudent',updatestudent,name='updstd')
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
