@@ -23,7 +23,7 @@ urlpatterns = [
         path('health',ApiOverview,name='hth'),
         path('studentlist',studentlist,name='stdli'),
         path('addstudent',addstudent,name='addstd'),
-        path('updatestudent',updatestudent,name='updstd')
+        path('updatestudent/<int:id>',updatestudent,name='updstd')
 ]
 
 if settings.DEBUG:

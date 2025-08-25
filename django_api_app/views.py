@@ -31,18 +31,18 @@ def addstudent(request):
     a1 = studentSerializer(data=request.data)
     if a1.is_valid():
         a1.save()
-        return Response({"message":"add successfully","data":a1.data})
+        return Response({"message":"added successfully","data":a1.data})
     else:
         return Response({"error":a1.errors})
    
 
-@api_view(['GET'])
+@api_view(['POST'])
 def updatestudent(request,id):
     g1 = student.objects.get(id=id)
     u1 = studentSerializer(g1,data=request.data)
     if u1.is_valid():
         u1.save()
-        return Response({"message":"add successfully","data":u1.data})
+        return Response({"message":"update successfully","data":u1.data})
     else:
         return Response({"error":u1.errors})
 
