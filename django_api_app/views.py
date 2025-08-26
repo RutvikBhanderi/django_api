@@ -19,12 +19,20 @@ def ApiOverview(request):
     return Response(api_urls)
 
 @api_view(['GET'])
-def studentlist(request):
-    x=student.objects.all()
-    y=studentSerializer(x,many=True)
-    print(x)
-    
-    return Response({"message":"success","data":y.data})
+def studentlist(request,id=None):
+    if id is not None:
+        try:
+            r1 = student.objects.get(id=id)
+            r2 = studentSerializer(r1)
+            return Response({"message":"read successfully","data":r2.data})
+        except student.DoesNotExist:
+            return Response({"error":"student not found"})        
+    else :
+        x=student.objects.all()
+        y=studentSerializer(x,many=True)
+        print(x)
+        
+        return Response({"message":"success","data":y.data})
 
 @api_view(['POST'])
 def addstudent(request):
@@ -46,7 +54,20 @@ def updatestudent(request,id):
     else:
         return Response({"error":u1.errors})
 
-@api_view(['GET'])
-def delstudent(request):
+@api_view(['DELETE'])
+def delstudent(request,id):
+    try:
+        d1 = student.objects.get(id=id)
+        d1.delete()
+        return Response({"message":"delete successfully"})
+    except student.DoesNotExist:
+        return Response({"error":"student not found"})
 
-    return Response()
+@api_view(['GET'])
+def readstudent(request,id):
+    try:
+        r1 = student.objects.get(id=id)
+        r2 = studentSerializer(r1)
+        return Response({"message":"read successfully","data":r2.data})
+    except student.DoesNotExist:
+        return Response({"error":"student not found"})

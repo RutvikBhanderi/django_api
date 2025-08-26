@@ -15,15 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import ApiOverview,studentlist,addstudent,updatestudent
+from .views import ApiOverview,studentlist,addstudent,updatestudent,delstudent,readstudent
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
         path('health',ApiOverview,name='hth'),
         path('studentlist',studentlist,name='stdli'),
+        path('studentlist/<int:id>',studentlist,name='stdlist'),
         path('addstudent',addstudent,name='addstd'),
-        path('updatestudent/<int:id>',updatestudent,name='updstd')
+        path('updatestudent/<int:id>',updatestudent,name='updstd'),
+        path('delstudent/<int:id>',delstudent,name='delstd'),
+        path('readstudent/<int:id>',readstudent,name='readstd')
 ]
 
 if settings.DEBUG:
