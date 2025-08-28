@@ -8,4 +8,3 @@ class student(models.Model):
     phone = models.BigIntegerField(default=0)
     city = models.CharField(max_length=100,default="")
     image = models.ImageField(upload_to="",blank = True, null=True)
-
