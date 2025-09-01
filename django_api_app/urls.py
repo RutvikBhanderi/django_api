@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import ApiOverview,studentlist,addstudent,updatestudent,delstudent,readstudent
-from django.conf import settings
+from .views import ApiOverview,studentlist,addstudent,updatestudent,delstudent,readstudent, studentViewSet
+from django.conf import settings 
 from django.conf.urls.static import static
+from rest_framework.routers import DefaultRouter
+router = DefaultRouter()
+router.register(r'students', studentViewSet, basename='student')
+
 
 urlpatterns = [
         path('health',ApiOverview,name='hth'),
@@ -28,6 +32,6 @@ urlpatterns = [
         path('delstudent/<int:id>',delstudent,name='delstd'),
         path('readstudent/<int:id>',readstudent,name='readstd')
 ]
-
+urlpatterns += router.urls
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

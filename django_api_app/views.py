@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import student
 from django_api_app.serlializers import studentSerializer
+from rest_framework import viewsets
 
 @api_view(['GET'])
 def ApiOverview(request):
@@ -71,3 +72,10 @@ def readstudent(request,id):
         return Response({"message":"read successfully","data":r2.data})
     except student.DoesNotExist:
         return Response({"error":"student not found"})
+
+class studentViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for viewing and editing user instances.
+    """
+    serializer_class = studentSerializer
+    queryset = student.objects.all()
