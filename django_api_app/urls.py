@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import ApiOverview,studentlist,addstudent,updatestudent,delstudent,readstudent, studentViewSet
+from .views import ApiOverview,studentlist,addstudent,updatestudent,delstudent,readstudent,studentclassbasedlist, studentViewSet
 from django.conf import settings 
 from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
-router.register(r'students', studentViewSet, basename='student')
+router.register(r'students', studentViewSet, basename='student'),
+
 
 
 urlpatterns = [
@@ -30,7 +31,10 @@ urlpatterns = [
         path('addstudent',addstudent,name='addstd'),
         path('updatestudent/<int:id>',updatestudent,name='updstd'),
         path('delstudent/<int:id>',delstudent,name='delstd'),
-        path('readstudent/<int:id>',readstudent,name='readstd')
+        path('readstudent/<int:id>',readstudent,name='readstd'),
+        path('studentclassbaseview/<int:id>/',studentclassbasedlist.as_view(),name='studentclassbaseview'),
+        path('studentclassbaseview/',studentclassbasedlist.as_view(),name='studentclassbaseview')
+        
 ]
 urlpatterns += router.urls
 if settings.DEBUG:
