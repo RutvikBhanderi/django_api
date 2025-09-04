@@ -86,16 +86,21 @@ class studentclassbasedlist(APIView):
     """
     List all snippets, or create a new snippet.
     """
-    def get_object(self, id):
+    def get_object(self, pk):
         try:
-            return student.objects.get(id=id)
+            return student.objects.get(pk=pk)
         except student.DoesNotExist:
             raise Http404
-        
-    def get(self, request, id, format=None):
-        snippet = self.get_object(id)
-        serializer = studentSerializer(snippet)
-        return Response(serializer.data)
+
+    def get(self, request, pk=None, format=None):
+        if pk:   # detail view
+            s1 = self.get_object(pk)
+            serializer = studentSerializer(s1)
+            return Response(serializer.data)
+        else:    # list view
+            students = student.objects.all()
+            serializer = studentSerializer(students, many=True)
+            return Response(serializer.data)
 
     def post(self, request, format=None):
        serializer = studentSerializer(data=request.data)
@@ -104,15 +109,15 @@ class studentclassbasedlist(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def put(self, request, id, format=None):
-        snippet = self.get_object(id)
-        serializer = studentSerializer(snippet, data=request.data)
+    def put(self, request, pk=None, format=None):
+        s1 = self.get_object(pk)
+        serializer = studentSerializer(s1, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, id, format=None):
-        d1 = self.get_object(id)
-        d1.delete()
+    def delete(self, request, pk=None, format=None):
+        s1 = self.get_object(pk)
+        s1.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

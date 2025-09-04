@@ -32,7 +32,7 @@ urlpatterns = [
         path('updatestudent/<int:id>',updatestudent,name='updstd'),
         path('delstudent/<int:id>',delstudent,name='delstd'),
         path('readstudent/<int:id>',readstudent,name='readstd'),
-        path('studentclassbaseview/<int:id>/',studentclassbasedlist.as_view(),name='studentclassbaseview'),
+        path('studentclassbaseview/<int:pk>/',studentclassbasedlist.as_view(),name='studentclassbaseview'),
         path('studentclassbaseview/',studentclassbasedlist.as_view(),name='studentclassbaseview')
         
 ]
