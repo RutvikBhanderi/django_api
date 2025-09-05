@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import Http404
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework import status
 from .models import student
 from django_api_app.serlializers import studentSerializer
@@ -121,3 +122,12 @@ class studentclassbasedlist(APIView):
         s1 = self.get_object(pk)
         s1.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+class studentList(generics.ListCreateAPIView):
+    queryset = student.objects.all()
+    serializer_class = studentSerializer
+
+class studentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = student.objects.all()
+    serializer_class = studentSerializer

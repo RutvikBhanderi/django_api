@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import ApiOverview,studentlist,addstudent,updatestudent,delstudent,readstudent,studentclassbasedlist, studentViewSet
+from .views import ApiOverview,studentlist,addstudent,updatestudent,delstudent,readstudent,studentclassbasedlist, studentViewSet,studentList,studentDetail
 from django.conf import settings 
 from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
@@ -33,7 +33,9 @@ urlpatterns = [
         path('delstudent/<int:id>',delstudent,name='delstd'),
         path('readstudent/<int:id>',readstudent,name='readstd'),
         path('studentclassbaseview/<int:pk>/',studentclassbasedlist.as_view(),name='studentclassbaseview'),
-        path('studentclassbaseview/',studentclassbasedlist.as_view(),name='studentclassbaseview')
+        path('studentclassbaseview/',studentclassbasedlist.as_view(),name='studentclassbaseview'),
+        path('studentgenericlist/',studentList.as_view(),name='studentgenericl'),
+        path('studentgenericdetail/<int:pk>/',studentDetail.as_view(),name='studentgenericd')
         
 ]
 urlpatterns += router.urls
